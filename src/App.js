@@ -13,7 +13,7 @@ export const App = () => {
     setRefreshProductsFlag(!refreshProductsFlag);
   };
 
-  const { isLoading, products } = useRequestGetProducts(refreshProductsFlag);
+  const { isLoading, products } = useRequestGetProducts();
 
   const { isCreating, requestAddVacuumCleaner } =
     useRequestAddVacuumCleaner(refreshProducts);
@@ -29,7 +29,7 @@ export const App = () => {
       {isLoading ? (
         <div className={styles.loader}></div>
       ) : (
-        products.map(({ id, name, price }) => (
+        Object.entries(products).map(([id, { name, price }]) => (
           <div key={id}>
             {name} - {price} руб
           </div>
