@@ -3,20 +3,17 @@ import { ref, onValue } from 'firebase/database';
 import { db } from '../firebase';
 
 export const useRequestGetProducts = (refreshProductsFlag) => {
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [products, setProducts] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const productsDbRef = ref(db, 'products');
 
     return onValue(productsDbRef, (snapshot) => {
-      const loadedProducts = snapshot.val() || [];
-      console.log(loadedProducts);
+      const loadedProducts = snapshot.val() || {};
       setProducts(loadedProducts);
       setIsLoading(false);
     });
-
-    setIsLoading(true);
   }, []);
 
   return {
